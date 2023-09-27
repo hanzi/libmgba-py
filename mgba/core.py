@@ -3,8 +3,11 @@
 # This Source Code Form is subject to the terms of the Mozilla Public
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
+import datetime
+
 from ._pylib import ffi, lib  # pylint: disable=no-name-in-module
 from . import tile, audio
+from .vfs import VFile
 from functools import cached_property, wraps
 
 
@@ -162,6 +165,7 @@ class Core(object):
         self._callbacks = CoreCallbacks()
         self._core.addCoreCallbacks(self._core, self._callbacks.context)
         self.config = Config(ffi.addressof(native.config))
+        self.rtc = RTC(self._core)
 
     def __del__(self):
         self._was_reset = False
@@ -229,15 +233,26 @@ class Core(object):
         return res
 
     @protected
-    def load_state(self, slot):
+    def load_state(self, vfile: VFile) -> bool:
+        return lib.mCoreLoadStateNamed(self._core, vfile.handle, 0)
+
+    @protected
+    def load_state_slot(self, slot: int) -> None:
         lib.mCoreLoadState(self._core, slot, 0)
 
     @protected
-    def save_state(self, slot):
+    def save_state(self) -> bytes:
+        vfile = VFile.fromEmpty()
+        lib.mCoreSaveStateNamed(self._core, vfile.handle, 0)
+        vfile.seek(0, 0)
+        return vfile.read_all()
+
+    @protected
+    def save_state_slot(self, slot: int) -> None:
         lib.mCoreSaveState(self._core, slot, 0)
 
     @protected
-    def load_save(self, vfile):
+    def load_save(self, vfile: VFile) -> bool:
         res = bool(self._core.loadSave(self._core, vfile.handle))
         if res:
             vfile._claimed = True
@@ -452,3 +467,63 @@ class Config(object):
         if isinstance(value, bool):
             value = int(value)
         lib.mCoreConfigSetValue(self._native, ffi.new("char[]", key.encode("UTF-8")), ffi.new("char[]", str(value).encode("UTF-8")))
+
+
+
+class RTC:
+    def __init__(self, core):
+        self._core = core
+        self.use_real_time()
+
+    def use_real_time(self):
+        """
+        This will configure mGBA to always return the real system time when asked
+        for an RTC value.
+        """
+        self._core.rtc.override = lib.RTC_NO_OVERRIDE
+        self._core.rtc.value = 0
+
+    def use_real_time_with_offset(self, offset_in_seconds: int) -> None:
+        """
+        This will configure mGBA to return the real system time but with a constant
+        offset.
+        :param offset_in_seconds: The amount of seconds that should be added to the
+                                  current system time when returning the RTC value.
+        """
+        self._core.rtc.override = lib.RTC_WALLCLOCK_OFFSET
+        self._core.rtc.value = offset_in_seconds * 1000
+
+    def use_fixed(self, static_datetime: datetime.datetime) -> None:
+        """
+        This will configure mGBA to return a constant RTC value, i.e. there will
+        be no time progression experienced by the game.
+        :param static_datetime: The date that should be reported to the game.
+        """
+        self._core.rtc.override = lib.RTC_FIXED
+        self._core.rtc.value = round(static_datetime.timestamp() * 1000)
+
+    def use_simulated_time(self, starting_time: datetime.datetime = datetime.datetime.now()) -> None:
+        """
+        This will configure mGBA to simulate the RTC as if the game was running
+        at 1x speed, even if it is running unthrottled. So for an unthrottled game,
+        this time value would increase much faster than the real system time.
+        :param starting_time: The date that should be set at the start of the
+                              emulation (defaults to the current system time.)
+        :return:
+        """
+        self._core.rtc.override = lib.RTC_FAKE_EPOCH
+        self._core.rtc.value = round(starting_time.timestamp() * 1000)
+
+    def advance_time(self, advance_by_milliseconds: int) -> None:
+        """
+        Advances the in-game clock by a given amount of milliseconds.
+        :param advance_by_milliseconds: Number of milliseconds to advance by.
+        :return:
+        """
+        if self._core.rtc.override == lib.RTC_NO_OVERRIDE:
+            self._core.rtc.override = lib.RTC_WALLCLOCK_OFFSET
+
+        self._core.rtc.value += advance_by_milliseconds
+
+        if self._core.rtc.override == lib.RTC_WALLCLOCK_OFFSET and self._core.rtc.value == 0:
+            self._core.rtc.override = lib.RTC_NO_OVERRIDE
