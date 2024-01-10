@@ -25,7 +25,8 @@ remote control an instance of the mGBA emulator.
 Heads up: This will require a couple of GB of disk space.
 
 1. Have [Visual Studio](https://visualstudio.microsoft.com/vs/community/) installed (the free Community Edition is enough.)
-2. Have [Python](https://www.python.org/downloads/windows/) installed.
+2. Have [Python](https://www.python.org/downloads/windows/) installed.   
+   (Also make sure you have `setuptools` installed. You might have to run `pip install setuptools` for that.)
 3. Have [Git](https://git-scm.com/download/win) installed.
 4. Download this repository to somewhere on your hard drive (using `git clone` or by just downloading it as a ZIP file.)
 5. Open the Start menu, look for the `Visual Studio 2022` directory, and run the `x64 Native Tools Command Prompt`.
