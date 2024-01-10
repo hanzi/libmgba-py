@@ -11,7 +11,7 @@ then
   exit 1
 fi
 
-UBUNTU_CODENAME=$(lsb_release -sc)
+UBUNTU_CODENAME=${1:-$(lsb_release -sc)}
 ORIGINAL_DIRECTORY=$(pwd)
 
 # Download and build mGBA itself

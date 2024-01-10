@@ -5,8 +5,8 @@ from pathlib import Path
 path_to_libmgba_py = Path(".").absolute()
 
 if platform.system() == "Windows":
-    path_to_mgba_root = Path("../mgba").absolute()
-    path_to_mgba_build = Path("../mgba/build").absolute()
+    path_to_mgba_root = Path("./mgba-src").absolute()
+    path_to_mgba_build = Path("./mgba-src/build").absolute()
 elif platform.system() == "Linux":
     # This only works for Ubuntu-based Docker images provided by the mGBA project
     # see: https://hub.docker.com/r/mgba/ubuntu/tags
