@@ -3,7 +3,7 @@ import platform
 from pathlib import Path
 
 path_to_libmgba_py = Path(".").absolute()
-path_to_homebrew_libs = Path("/usr/homebrew/include")
+path_to_homebrew_libs = Path("/opt/homebrew/include")
 usr_local_include = Path("/usr/local/include")
 
 if platform.system() == "Windows":
