@@ -14,5 +14,8 @@ elif platform.system() == "Linux":
 
     path_to_mgba_root = Path("/home/mgba/src")
     path_to_mgba_build = Path(f"/home/mgba/src/{build_directory}")
+elif platform.system() == "Darwin":
+    path_to_mgba_root = Path("./mgba-src").absolute()
+    path_to_mgba_build = Path("./mgba-src/build").absolute()
 else:
     raise RuntimeError("Unsupported platform: " + platform.system())
