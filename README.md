@@ -49,6 +49,15 @@ can be checked here: https://hub.docker.com/r/mgba/ubuntu/tags
 4. Open a shell and navigate to this directory.
 5. Run `build_ubuntu.sh`
 
+### Compiling on Macos
+
+1. Have [Homebrew](https://brew.sh/) installed
+2. Have Xcode installed from the app store
+3. Download this repository to somewhere on your hard drive (using `git clone` or by just downloading it as a ZIP file.)
+4. Open a shell and navigate to this directory.
+5. Run `chmod +x build_mac.sh`
+6. Run `./build_mac.sh`
+
 
 ## License
 
