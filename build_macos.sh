@@ -28,3 +28,8 @@ mv mgba-src/include/mgba-util/png-io.h mgba-src/include/mgba-util/png.h
 touch mgba-src/include/mgba-util/png-io.h
 pip install cffi setuptools
 python3 setup.py build --build-lib build/mac
+
+echo ""
+echo "Done!"
+echo "Distributable files are located in build/mac/mgba/"
+cd "$ORIGINAL_DIRECTORY"
