@@ -22,10 +22,6 @@ cmake -DCMAKE_PREFIX_PATH=`brew --prefix qt5` ..
 make
 cd ../..
 
-# I have NO clue how this works, I couldnt work out why it kept complaining about png.h but this shut it up
-# If someone smarter than me works it out please fix it lmao
-mv mgba-src/include/mgba-util/png-io.h mgba-src/include/mgba-util/png.h
-touch mgba-src/include/mgba-util/png-io.h
 pip install cffi setuptools
 python3 setup.py build --build-lib build/mac
 

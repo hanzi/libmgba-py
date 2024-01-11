@@ -5,7 +5,7 @@ import subprocess
 
 import cffi
 
-from _config import path_to_libmgba_py, path_to_mgba_build, path_to_mgba_root
+from _config import path_to_libmgba_py, path_to_mgba_build, path_to_mgba_root, path_to_homebrew_libs, usr_local_include
 
 source_files = [
     path_to_libmgba_py / "vfs-py.c",
@@ -18,7 +18,9 @@ include_dirs = [
     path_to_libmgba_py,
     path_to_mgba_build / "include",
     path_to_mgba_root / "include",
-    path_to_mgba_root / "src"
+    path_to_mgba_root / "src",
+    path_to_homebrew_libs,
+    usr_local_include # Including this one as well because I think intel macs use it maybe
 ]
 
 library_dirs = [
