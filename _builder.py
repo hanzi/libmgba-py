@@ -11,14 +11,14 @@ source_files = [
     path_to_libmgba_py / "vfs-py.c",
     path_to_libmgba_py / "core.c",
     path_to_libmgba_py / "log.c",
-    path_to_libmgba_py / "sio.c"
+    path_to_libmgba_py / "sio.c",
 ]
 
 include_dirs = [
     path_to_libmgba_py,
     path_to_mgba_build / "include",
     path_to_mgba_root / "include",
-    path_to_mgba_root / "src"
+    path_to_mgba_root / "src",
 ]
 
 library_dirs = [
@@ -37,6 +37,11 @@ if platform.system() == "Windows":
         preprocessed_header = file.read()
     os.remove(path_to_libmgba_py / "_builder_cdef.i")
 else:
+    if platform.system() == "Darwin":
+        include_dirs.append("/opt/homebrew/include")
+        include_dirs.append("/usr/local/include")
+        library_dirs.append("/usr/local/lib")
+
     library_dirs.append(path_to_mgba_build)
 
     preprocessor_command = ["cc", "-E", *(f"-I{path.as_posix()}" for path in include_dirs)]

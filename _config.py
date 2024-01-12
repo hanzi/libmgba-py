@@ -4,7 +4,7 @@ from pathlib import Path
 
 path_to_libmgba_py = Path(".").absolute()
 
-if platform.system() == "Windows":
+if platform.system() in ("Windows", "Darwin"):
     path_to_mgba_root = Path("./mgba-src").absolute()
     path_to_mgba_build = Path("./mgba-src/build").absolute()
 elif platform.system() == "Linux":
