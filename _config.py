@@ -3,10 +3,8 @@ import platform
 from pathlib import Path
 
 path_to_libmgba_py = Path(".").absolute()
-path_to_homebrew_libs = Path("/opt/homebrew/include")
-usr_local_include = Path("/usr/local/include")
 
-if platform.system() == "Windows":
+if platform.system() in ("Windows", "Darwin"):
     path_to_mgba_root = Path("./mgba-src").absolute()
     path_to_mgba_build = Path("./mgba-src/build").absolute()
 elif platform.system() == "Linux":
@@ -16,8 +14,5 @@ elif platform.system() == "Linux":
 
     path_to_mgba_root = Path("/home/mgba/src")
     path_to_mgba_build = Path(f"/home/mgba/src/{build_directory}")
-elif platform.system() == "Darwin":
-    path_to_mgba_root = Path("./mgba-src").absolute()
-    path_to_mgba_build = Path("./mgba-src/build").absolute()
 else:
     raise RuntimeError("Unsupported platform: " + platform.system())
