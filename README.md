@@ -49,7 +49,7 @@ can be checked here: https://hub.docker.com/r/mgba/ubuntu/tags
 4. Open a shell and navigate to this directory.
 5. Run `build_ubuntu.sh`
 
-### Compiling on Macos
+### Compiling on MacOS
 
 1. Have [Homebrew](https://brew.sh/) installed
 2. Have Xcode installed from the app store

@@ -5,7 +5,7 @@
 MGBA_VERSION=0.10.2
 if [ "$(uname)" != "Darwin" ]
  then
-  >&2 echo "This does not seem to be Macos. Only Macos is supported by this convenience script."
+  >&2 echo "This does not seem to be MacOS. Only MacOS is supported by this convenience script."
   exit 1
 fi
 
