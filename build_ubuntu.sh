@@ -2,7 +2,7 @@
 
 # mGBA version that should be checked out from the Git repository.
 # Must be a valid Git ref.
-MGBA_VERSION=0.10.2
+MGBA_VERSION=0.10.3
 
 LSB_DISTRIBUTION_ID=$(lsb_release -si)
 if [ "$LSB_DISTRIBUTION_ID" != "Ubuntu" ]

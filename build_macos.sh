@@ -2,7 +2,7 @@
 
 # mGBA version that should be checked out from the Git repository.
 # Must be a valid Git ref.
-MGBA_VERSION=0.10.2
+MGBA_VERSION=0.10.3
 if [ "$(uname)" != "Darwin" ]
  then
   >&2 echo "This does not seem to be MacOS. Only MacOS is supported by this convenience script."

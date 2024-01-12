@@ -1,7 +1,7 @@
 @echo off
 
 REM mGBA version that should be checked out from the Git repository. Must be a valid Git ref.
-SET MGBA_VERSION=0.10.2
+SET MGBA_VERSION=0.10.3
 
 WHERE /q git
 IF %ERRORLEVEL% NEQ 0 (

@@ -25,6 +25,12 @@ library_dirs = [
     path_to_libmgba_py,
 ]
 
+# In more recent versions of mGBA, the `png-io.h` file has been moved into a different directory.
+# This might be a bad way to solve it, but it _does_ solve it.
+if not (path_to_mgba_root / "include" / "mgba-util" / "png-io.h").is_file():
+    with open(path_to_mgba_build / "include" / "mgba-util" / "png-io.h", "w") as file:
+        file.write('#include "mgba-util/image/png-io.h"')
+
 if platform.system() == "Windows":
     include_dirs.append(path_to_mgba_build / "vcpkg" / "installed" / "x64-windows" / "include")
     library_dirs.append(path_to_mgba_build / "Release")
