@@ -15,7 +15,7 @@ ORIGINAL_DIRECTORY=$(pwd)
 git clone https://github.com/mgba-emu/mgba.git mgba-src
 cd mgba-src
 git checkout "$MGBA_VERSION"
-brew install cmake ffmpeg libzip qt5 sdl2 libedit lua pkg-config
+brew install cmake ffmpeg libzip qt5 sdl2 libedit lua pkg-config mgba
 mkdir build
 cd build
 cmake -DCMAKE_PREFIX_PATH=`brew --prefix qt5` ..
