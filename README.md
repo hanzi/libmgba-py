@@ -1,10 +1,8 @@
-mGBA Python Bindings
-=====================
+# mGBA Python Bindings
 
 This is a fork of the Python bindings in the
 [mGBA repository](https://github.com/mgba-emu/mgba/tree/master/src/platform/python)
 with some modifications to get it to build easily on my machine.
-
 
 ## What this is (and isn't)
 
@@ -17,7 +15,6 @@ interact with its internal functions using Python.
 It does **not** come with any GUI, i.e. you can't use it to just
 remote control an instance of the mGBA emulator.
 
-
 ## Build Instructions
 
 ### Compiling on Windows (64-bit)
@@ -25,7 +22,7 @@ remote control an instance of the mGBA emulator.
 Heads up: This will require a couple of GB of disk space.
 
 1. Have [Visual Studio](https://visualstudio.microsoft.com/vs/community/) installed (the free Community Edition is enough.)
-2. Have [Python](https://www.python.org/downloads/windows/) installed.   
+2. Have [Python](https://www.python.org/downloads/windows/) installed.  
    (Also make sure you have `setuptools` installed. You might have to run `pip install setuptools` for that.)
 3. Have [Git](https://git-scm.com/download/win) installed.
 4. Download this repository to somewhere on your hard drive (using `git clone` or by just downloading it as a ZIP file.)
@@ -49,14 +46,13 @@ can be checked here: https://hub.docker.com/r/mgba/ubuntu/tags
 4. Open a shell and navigate to this directory.
 5. Run `build_ubuntu.sh`
 
-### Compiling on MacOS
+### Compiling on MacOS (Ventura 13.5 or later)
 
 1. Have [Homebrew](https://brew.sh/) installed
 2. Have Xcode installed from the app store
 3. Download this repository to somewhere on your hard drive (using `git clone` or by just downloading it as a ZIP file.)
 4. Open a shell and navigate to this directory.
-5. Run `./build_mac.sh`
-
+5. Run `./build_macos.sh`
 
 ## License
 
@@ -65,6 +61,6 @@ a bit, so [the original license terms](https://github.com/mgba-emu/mgba/#copyrig
 apply:
 
 > mGBA is Copyright © 2013 – 2023 Jeffrey Pfau.
-> 
+>
 > It is distributed under the Mozilla Public License version 2.0.  
 > A copy of the license is available in the distributed LICENSE file.
