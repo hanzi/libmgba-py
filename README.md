@@ -2,7 +2,7 @@ mGBA Python Bindings
 =====================
 
 This is a fork of the Python bindings in the [mGBA repository](https://github.com/mgba-emu/mgba/tree/master/src/platform/python) and [libmgba-py repository](https://github.com/hanzi/libmgba-py)
-with some modifications to get it to build easily on Raspberry Pi 3B or 4 (Pi 5 not tested).
+with some modifications to get it to build easily on Raspberry Pi 4 (Pi 5 not tested).
 
 
 ## What this is (and isn't)
@@ -17,43 +17,32 @@ It does **not** come with any GUI, i.e. you can't use it to just
 remote control an instance of the mGBA emulator.
 
 
-## Build Instructions on Raspberry Pi OS 64 bits (Bookworm) (tested on 3B and 4)
-
-### mGBA 0.10.1
-
-   1. Install depedencies `sudo apt install git python3-setuptools python3-cffi python3-distutils python3-tk libmgba0.10 portaudio19-dev cmake libedit-dev libavcodec-dev libavfilter-dev libpng-dev libzip-dev libminizip-dev zipcmp zipmerge ziptool libepoxy-dev libelf-dev libsdl2-dev`
-   2. `git clone https://github.com/hanzi/libmgba-py/`
-   3. `git clone --depth 1 --branch 0.10.1 https://github.com/mgba-emu/mgba`
-   4. `cp libmgba-py/core.* mgba/src/platform/python/`
-   5. `cp libmgba-py/mgba/* mgba/src/platform/python/mgba/`
-   6. `cd mgba/`
-   7. `mkdir build`
-   8. `cd build`
-   9. `cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DBUILD_PYTHON=ON -DBUILD_QT=OFF ..`
-   10. `make -j4` (this should take about 6 minutes on Pi4)
-   
-   the build files are located in `/home/pi/mgba/build/python/lib.linux-aarch64-cpython-312`
+## Build Instructions on Raspberry Pi OS 64 bits (Trixie) (tested on PI 4)
 
 ### mGBA 0.10.x
 
-   These instructions CAN ONLY WORK with the mGBA 0.10.x branches, replace x with the number desired (not tested with mGBA version higher than 0.10.3)
+   These instructions CAN ONLY WORK with the mGBA 0.10.x branches, replace x with the number desired (not tested with mGBA version higher than 0.10.5)
    
-   example for mGBA 0.10.3
-   1. Install depedencies `sudo apt install git python3-setuptools python3-cffi python3-distutils python3-tk libmgba0.10 portaudio19-dev cmake libedit-dev libavcodec-dev libavfilter-dev libpng-dev libzip-dev libminizip-dev zipcmp zipmerge ziptool libepoxy-dev libelf-dev libsdl2-dev`
-   2. `git clone https://github.com/hanzi/libmgba-py/`
-   3. `git clone --depth 1 --branch 0.10.3 https://github.com/mgba-emu/mgba`
-   4. `cp libmgba-py/core.* mgba/src/platform/python/`
-   5. `cp libmgba-py/mgba/* mgba/src/platform/python/mgba/`
-   6. `cd mgba/`
-   7. `mkdir build`
-   8. `cd build`
-   9. `cmake -DCMAKE_INSTALL_PREFIX:PATH=/usr -DBUILD_PYTHON=ON -DBUILD_QT=OFF ..`
-   10. `make -j4` (this should take about 6 minutes on Pi4)
-   
-   the build files are located in `/home/pi/mgba/build/python/lib.linux-aarch64-cpython-312`
+   example for mGBA 0.10.5
+   1. Install depedencies<br>`sudo apt install python3-setuptools python3-cffi python3-dev python3-tk libmgba0.10t64 portaudio19-dev git cmake build-essential libedit-dev libavcodec-dev libavfilter-dev libpng-dev libzip-dev libminizip-dev libepoxy-dev libelf-dev libsdl2-dev liblua5.4-dev libsqlite3-dev`
+   2. Download Pokébot-gen3<br>`git clone --depth 1 https://github.com/40Cakes/pokebot-gen3`
+   3. Now we create a special folder for the buids files and venv<br>`cd && mkdir LibmgbaForRPI`<br>`cd LibmgbaForRPI`
+   5. We create a python venv<br>`python -m venv PyPokebot`
+   6. We install the pokebot-gen3 requirements<br>`/home/pi/LibmgbaForRPI/PyPokebot/bin/python /home/pi/pokebot-gen3/requirements.py`<br>(Press Enter when asked to "install libmgba-py anyway")
+   7. `git clone https://github.com/hanzi/libmgba-py/`
+   8. `git clone --depth 1 --branch 0.10.5 https://github.com/mgba-emu/mgba`
+   9. `cp /home/pi/LibmgbaForRPI/libmgba-py/core.* /home/pi/LibmgbaForRPI/mgba/src/platform/python/`
+   10. `cp /home/pi/LibmgbaForRPI/libmgba-py/mgba/* /home/pi/LibmgbaForRPI/mgba/src/platform/python/mgba/`
+   11. `cd /home/pi/LibmgbaForRPI/mgba`
+   12. `mkdir build`
+   13. `cd build`
+   14. `cmake .. -DCMAKE_INSTALL_PREFIX:PATH=/usr -DCMAKE_C_FLAGS="-Wno-error=incompatible-pointer-types" -DENABLE_PYTHON=ON -DBUILD_PYTHON=ON -DBUILD_QT=OFF`
+   15. `make CFLAGS="-Wno-error=incompatible-pointer-types" -j4`
+   16. `cp /home/pi/LibmgbaForRPI/mgba/build/python/lib.linux-aarch64-cpython-313/mgba/* /home/pi/pokebot-gen3/mgba/`
+   17. Launch the game with this command<br>`/home/pi/LibmgbaForRPI/PyPokebot/bin/python /home/pi/pokebot-gen3/pokebot.py`
    
    > [!WARNING]
-   > **DON'T DELETE NOR MOVE THE `/home/pi/mgba/build` FOLDER ! (unless you used mGBA 0.10.1 branch)**
+   > **DON'T DELETE NOR MOVE THE `/home/pi/LibmgbaForRPI` FOLDER !**
 
 ## License
 
